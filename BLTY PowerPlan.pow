@@ -1,0 +1,24 @@
+$highPerf = powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
+$guid = ($highPerf -split ' ')[4]
+
+$planName = "BLTY PowerPlan"
+powercfg -changename $guid $planName
+
+powercfg -setacvalueindex $guid SUB_PROCESSOR PROCTHROTTLEMAX 100
+powercfg -setacvalueindex $guid SUB_PROCESSOR PROCTHROTTLEMIN 100
+powercfg -setacvalueindex $guid SUB_PROCESSOR PROCSCHEDPOL 0
+powercfg -setacvalueindex $guid SUB_PROCESSOR PERFBOOSTMODE 0
+
+powercfg -setacvalueindex $guid SUB_DISK DISKIDLE 0
+
+powercfg -setacvalueindex $guid SUB_NONE 19cbb8fa-5279-450e-9fac-8a3d5fedd0c1 0
+
+powercfg -setacvalueindex $guid SUB_SLEEP STANDBYIDLE 0
+powercfg -setacvalueindex $guid SUB_SLEEP HIBERNATEIDLE 0
+
+powercfg -setacvalueindex $guid SUB_VIDEO VIDEOIDLE 0
+powercfg -setacvalueindex $guid SUB_VIDEO VIDEODIM 0
+
+powercfg -setactive $guid
+
+Write-Host "New power plan created and activated: $planName with GUID: $guid"
